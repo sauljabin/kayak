@@ -29,4 +29,3 @@ if __name__ == "__main__":
     test_commands = {"list files": "ls .", "testing echo": "echo 'hello world'"}
     command_processor = CommandProcessor(test_commands)
     command_processor.run()
-

@@ -11,16 +11,17 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### New
 
 ### Changes
+* readme and new scripts
 
 ### Fixes
 
 ### Breaks
 
 
-## 0.2.0 - (2023-03-06)
+## 0.1.3 - (2023-03-06)
 ---
 
-### New
+### Fixes
 * fix scripts
 
 
@@ -30,7 +31,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## 0.1.1 - (2023-03-06)
 ---
 
-### New
+### Fixes
 * scripts
 
 

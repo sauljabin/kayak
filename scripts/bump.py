@@ -1,3 +1,6 @@
+import shlex
+import subprocess
+
 import click
 import toml
 from rich.console import Console
@@ -22,6 +25,34 @@ def main(rule):
     More info at https://python-poetry.org/docs/cli/#version and https://semver.org/.
     """
 
+    console = Console()
+
+    bump_version(rule)
+
+    app_version = get_app_version()
+    changelog_version = get_changelog_version()
+
+    if app_version != changelog_version:
+        console.print(
+            "[bold red]New app and changelog version are not equal, review them "
+            "manually first.[/]"
+        )
+        revert_changes()
+        return
+
+    confirmation = console.input(
+        f"Release a new [purple bold]{rule}[/] version [bold purple]{app_version}[/] "
+        f"([bold green]yes[/]/[bold red]no[/])? "
+    )
+
+    if confirmation != "yes":
+        revert_changes()
+        return
+
+    confirm_changes(app_version)
+
+
+def bump_version(rule):
     init_commands = {
         "checking pending changes": "git diff --exit-code",
         "checking pending changes in stage": "git diff --staged --exit-code",
@@ -32,28 +63,12 @@ def main(rule):
     command_processor = CommandProcessor(init_commands)
     command_processor.run()
 
-    toml_data = toml.load("pyproject.toml")
-    new_version = toml_data["tool"]["poetry"]["version"]
 
-    console = Console()
-
-    confirmation = console.input(
-        f"Release a new [purple bold]{rule}[/] version [bold purple]{new_version}[/] "
-        f"([bold green]yes[/]/[bold red]no[/])? "
-    )
-
-    if confirmation != "yes":
-        revert_commands = {
-            "deleting changes": "git checkout .",
-        }
-        command_processor = CommandProcessor(revert_commands)
-        command_processor.run()
-        return
-
+def confirm_changes(app_version):
     confirm_commands = {
         "adding new version": "git add --all",
-        "committing new version": f"git commit -m 'bumping version to {new_version}'",
-        "adding new version tag": f"git tag v{new_version}",
+        "committing new version": f"git commit -m 'bumping version to {app_version}'",
+        "adding new version tag": f"git tag v{app_version}",
         "pushing new changes": "git push origin main",
         "pushing tag": "git push --tags",
     }
@@ -61,5 +76,25 @@ def main(rule):
     command_processor.run()
 
 
-if __name__ == '__main__':
+def revert_changes():
+    revert_commands = {
+        "deleting changes": "git checkout .",
+    }
+    command_processor = CommandProcessor(revert_commands)
+    command_processor.run()
+
+
+def get_app_version():
+    toml_data = toml.load("pyproject.toml")
+    app_version = toml_data["tool"]["poetry"]["version"]
+    return app_version
+
+
+def get_changelog_version():
+    command_split = shlex.split("poetry run changelog current")
+    result = subprocess.run(command_split, capture_output=True)
+    return result.stdout.decode().strip()
+
+
+if __name__ == "__main__":
     main()
