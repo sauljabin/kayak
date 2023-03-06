@@ -7,6 +7,10 @@ from rich.console import Console
 
 from scripts import CommandProcessor
 
+TEST_VERSION_APP_PATH = "tests/test_kayak.py"
+
+INIT_FILE_PATH = "kayak/__init__.py"
+
 
 @click.command()
 @click.argument(
@@ -26,30 +30,42 @@ def main(rule):
     """
 
     console = Console()
+    current_version = get_app_version()
 
     bump_version(rule)
 
-    app_version = get_app_version()
-    changelog_version = get_changelog_version()
+    new_app_version = get_app_version()
+    new_changelog_version = get_changelog_version()
 
-    if app_version != changelog_version:
+    if new_app_version != new_changelog_version:
         console.print(
             "[bold red]New app and changelog version are not equal, review them "
             "manually first.[/]"
         )
         revert_changes()
-        return
+        exit(1)
+
+    for path in [INIT_FILE_PATH, TEST_VERSION_APP_PATH]:
+        replace_version_in_file(path, current_version, new_app_version)
 
     confirmation = console.input(
-        f"Release a new [purple bold]{rule}[/] version [bold purple]{app_version}[/] "
+        f"Release a new [purple bold]{rule}[/] version [bold purple]{new_app_version}[/] "
         f"([bold green]yes[/]/[bold red]no[/])? "
     )
 
     if confirmation != "yes":
         revert_changes()
-        return
+        exit(1)
 
-    confirm_changes(app_version)
+    confirm_changes(new_app_version)
+
+
+def replace_version_in_file(file_path, current_version, new_app_version):
+    with open(file_path, "r") as file:
+        current_file = file.read()
+    new_file = current_file.replace(current_version, new_app_version)
+    with open(file_path, "w") as file:
+        file.write(new_file)
 
 
 def bump_version(rule):

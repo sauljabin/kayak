@@ -5,7 +5,7 @@ from kayak import APP_NAME, APP_VERSION
 from kayak.styles.colors import ORANGE
 
 
-class KayakVersion:
+class KayakName:
     def __init__(self, include_version: bool = True):
         self.include_version = include_version
 
