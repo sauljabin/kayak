@@ -24,7 +24,10 @@
 :rocket: This project is powered by [textual](https://github.com/willmcgugan/textual)
 and [rich](https://github.com/willmcgugan/rich)!.
 
+# Table of Contents
+
 <!-- TOC -->
+* [Table of Contents](#table-of-contents)
 * [Installation and Usage](#installation-and-usage)
   * [Running with Docker](#running-with-docker)
 * [Development](#development)
