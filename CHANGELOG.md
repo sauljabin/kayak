@@ -11,11 +11,17 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### New
 
 ### Changes
-* update version inside py file
 
 ### Fixes
 
 ### Breaks
+
+
+## 0.1.5 - (2023-03-06)
+---
+
+### Changes
+* update version inside py file
 
 
 ## 0.1.4 - (2023-03-06)
