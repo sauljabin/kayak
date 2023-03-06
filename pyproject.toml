@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kayak"
-version = "0.1.3"
+version = "0.1.4"
 description = ""
 authors = ["Saúl Piña <sauljabin@gmail.com>"]
 license = "MIT"
