@@ -3,13 +3,41 @@ name = "kayak"
 version = "0.1.0"
 description = ""
 authors = ["Saúl Piña <sauljabin@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/sauljabin/kayak"
+repository = "https://github.com/sauljabin/kayak"
+documentation = "https://github.com/sauljabin/kayak"
+keywords = ["kafka", "kayak"]
+classifiers = [
+    "Environment :: Console",
+    "Operating System :: MacOS",
+    "Operating System :: Unix"
+]
+include = [
+    "LICENSE",
+]
+packages = [
+    { include = "kayak" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+rich = "^13.3.2"
+pyfiglet = "^0.8.post1"
+click = "^8.1.3"
+validators = "^0.20.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+changelog-cli = "^0.7.1"
+mypi = "^0.0.3"
+toml = "^0.10.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+kayak = "kayak.app:main"
+kyk = "kayak.app:main"
