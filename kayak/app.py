@@ -1,7 +1,6 @@
 import os
 
 import click
-import validators
 from rich.console import Console
 
 from kayak.renderables.kayak_name import KayakName
@@ -49,10 +48,6 @@ def main(
 
     if server is None:
         console.print("[bold red]Missing argument 'SERVER'[/]")
-        exit(1)
-
-    if not validators.url(server):
-        console.print("[bold red]'SERVER' is not a valid URL[/]")
         exit(1)
 
     click.echo(f"{server} {user} {password}")

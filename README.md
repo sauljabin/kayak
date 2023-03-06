@@ -54,6 +54,39 @@ Generate readme banner:
 poetry run python -m scripts.banner
 ```
 
+### Kafka Cluster
+
+Run local cluster:
+
+```shell
+cd cluster
+docker compose up -d
+```
+
+> Open <http://localhost:8080/>
+
+Run ksqlDB cli:
+
+```shell
+ksql http://localhost:8088
+```
+
+### Docker
+
+Build docker:
+
+```shell
+poetry run python -m scripts.docker
+```
+
+> Image tagged as `sauljabin/kayak:latest`.
+
+Run with docker (create a `config.yml` file):
+
+```shell
+docker run --rm -it --network cluster sauljabin/kayak:latest http://ksqldb:8088
+```
+
 ### Bumping Version
 
 Help:
@@ -63,6 +96,7 @@ poetry run python -m scripts.release --help
 ```
 
 > More info at https://python-poetry.org/docs/cli/#version and https://semver.org/.
+
 > For changelog management check https://github.com/mc706/changelog-cli.
 
 Upgrade (`major.minor.patch`):
