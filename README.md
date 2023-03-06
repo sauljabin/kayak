@@ -93,7 +93,7 @@ kayak --user user --password -- http://ksqldb:8088
 
 ## Running with Docker
 
-Using docker (remember to set a `network` and `volume`):
+Using docker:
 
 ```shell
 docker run --rm -it --network cluster sauljabin/kayak:latest http://ksqldb:8088
