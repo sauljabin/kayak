@@ -9,13 +9,19 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ---
 
 ### New
-* fix scripts
 
 ### Changes
 
 ### Fixes
 
 ### Breaks
+
+
+## 0.2.0 - (2023-03-06)
+---
+
+### New
+* fix scripts
 
 
 ## 0.1.2 - (2023-03-06)
