@@ -23,9 +23,9 @@ def main(rule):
     """
 
     init_commands = {
-        "checking pending changes :checkered_flag:": "git diff --exit-code",
+        "checking pending changes": "git diff --exit-code",
         "checking pending changes in stage": "git diff --staged --exit-code",
-        "checking not pushed commits :kite:": "git diff --exit-code main origin/main",
+        "checking not pushed commits": "git diff --exit-code main origin/main",
         f"bumping to a [purple bold]{rule}[/] version": f"poetry version {rule}",
         f"bumping changelog to a [purple bold]{rule}[/] version": f"poetry run changelog release --{rule} --yes",
     }
@@ -54,7 +54,7 @@ def main(rule):
         "adding new version": "git add --all",
         "committing new version": f"git commit -m 'bumping version to {new_version}'",
         "adding new version tag": f"git tag v{new_version}",
-        "pushing new changes :boom:": "git push origin main",
+        "pushing new changes": "git push origin main",
         "pushing tag": "git push --tags",
     }
     command_processor = CommandProcessor(confirm_commands)

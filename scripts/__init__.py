@@ -14,7 +14,7 @@ class CommandProcessor:
 
         for name, command in self.commands.items():
             console.print()
-            console.rule(f"> [bold blue]{name.lower()}", align="left")
+            console.print(f"[bold blue]{name.lower()}:")
             console.print(f"[bold yellow]{command}[/]")
             command_split = shlex.split(command)
             result = subprocess.run(command_split)
