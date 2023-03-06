@@ -9,13 +9,19 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ---
 
 ### New
-* docker
 
 ### Changes
 
 ### Fixes
 
 ### Breaks
+
+
+## 0.2.0 - (2023-03-06)
+---
+
+### New
+* docker
 
 
 ## 0.1.5 - (2023-03-06)
