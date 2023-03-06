@@ -2,6 +2,107 @@
 <a href="https://github.com/sauljabin/kayak"><img alt="kayak" src="https://raw.githubusercontent.com/sauljabin/kayak/main/screenshots/banner.png"></a>
 </p>
 
+
+<a href="https://github.com"><img alt="GitHub" width="60" height="20" src="https://img.shields.io/badge/-github-blueviolet?logo=github&logoColor=white"></a>
+<a href="https://github.com/sauljabin/kayak/blob/main/LICENSE"><img alt="MIT License" src="https://img.shields.io/github/license/sauljabin/kayak"></a>
+<a href="https://github.com/sauljabin/kayak/actions"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/sauljabin/kayak/main.yml?branch=main"></a>
+<br>
+<a href="https://www.python.org/"><img alt="Python" width="60" height="20" src="https://img.shields.io/badge/-python-brightgreen?logo=python&logoColor=white"></a>
+<a href="https://pypi.org/project/kayak"><img alt="Version" src="https://img.shields.io/pypi/v/kayak"></a>
+<a href="https://pypi.org/project/kayak"><img alt="Python Versions" src="https://img.shields.io/pypi/pyversions/kayak"></a>
+<a href="https://pypi.org/project/kayak"><img alt="Platform" src="https://img.shields.io/badge/platform-linux%20%7C%20osx-0da5e0"></a>
+<br>
+<a href="https://ksqldb.io/"><img alt="ksqlDB" width="60" height="20" src="https://img.shields.io/badge/-ksqlDB-F05662?logo=apache-kafka&logoColor=white"></a>
+<a href="https://ksqldb.io/"><img alt="ksqlDB" src="https://img.shields.io/badge/version-0.28.3-blue"></a>
+<br>
+<a href="https://www.docker.com/"><img alt="Docker" width="60" height="20" src="https://img.shields.io/badge/-docker-blue?logo=docker&logoColor=white"></a>
+<a href="https://hub.docker.com/r/sauljabin/kayak"><img alt="Docker Image Version (latest by date)" src="https://img.shields.io/docker/v/sauljabin/kayak?label=tag"></a>
+<a href="https://hub.docker.com/r/sauljabin/kayak"><img alt="Docker Image Size (latest by date)" src="https://img.shields.io/docker/image-size/sauljabin/kayak"></a>
+
+**kayak** is a [ksqlDB](https://ksqldb.io/) TUI (text user interface).
+
+:rocket: This project is powered by [textual](https://github.com/willmcgugan/textual)
+and [rich](https://github.com/willmcgugan/rich)!.
+
+<!-- TOC -->
+* [Installation and Usage](#installation-and-usage)
+  * [Running with Docker](#running-with-docker)
+* [Development](#development)
+    * [Scripts](#scripts)
+    * [Kafka Cluster](#kafka-cluster)
+    * [Docker](#docker)
+    * [Bumping Version](#bumping-version)
+<!-- TOC -->
+
+# Installation and Usage
+
+Install with pip:
+
+```shell
+pip install kayak
+```
+
+> `pip` will install `kayak` and `kyk` aliases.
+
+Upgrade with pip:
+
+```shell
+pip install --upgrade kayak
+```
+
+Help:
+
+```shell
+kayak --help
+```
+
+Version:
+
+```shell
+kayak --version
+```
+
+Run:
+
+```shell
+kayak http://ksqldb:8088
+```
+
+Run authenticated:
+
+```shell
+kayak --user user --password password http://ksqldb:8088
+```
+
+Run authenticated with input:
+
+```shell
+kayak http://ksqldb:8088 --user user --password
+```
+
+or
+
+```shell
+kayak --user user --password -- http://ksqldb:8088
+```
+
+> `kayak` will wait until you enter the password.
+
+## Running with Docker
+
+Using docker (remember to set a `network` and `volume`):
+
+```shell
+docker run --rm -it --network cluster sauljabin/kayak:latest http://ksqldb:8088
+```
+
+Aliases:
+
+```shell
+alias kayak='docker run --rm -it --network cluster sauljabin/kayak:latest'
+alias kyk=kayak
+```
+
 # Development
 
 Installing poetry:
@@ -25,7 +126,7 @@ poetry run pre-commit install
 Running kayak:
 
 ```shell
-poetry run kayak
+poetry run kayak --help
 ```
 
 ### Scripts
@@ -73,7 +174,7 @@ ksql http://localhost:8088
 
 ### Docker
 
-Build docker:
+Build docker image:
 
 ```shell
 poetry run python -m scripts.docker
@@ -81,7 +182,7 @@ poetry run python -m scripts.docker
 
 > Image tagged as `sauljabin/kayak:latest`.
 
-Run with docker (create a `config.yml` file):
+Run with docker:
 
 ```shell
 docker run --rm -it --network cluster sauljabin/kayak:latest http://ksqldb:8088
