@@ -13,6 +13,7 @@
 <a href="https://pypi.org/project/kayak"><img alt="Platform" src="https://img.shields.io/badge/platform-linux%20%7C%20osx-0da5e0"></a>
 <br>
 <a href="https://ksqldb.io/"><img alt="ksqlDB" width="60" height="20" src="https://img.shields.io/badge/-ksqlDB-F05662?logo=apache-kafka&logoColor=white"></a>
+<a href="https://pypi.org/project/ksql/"><img alt="ksqlDB Client" src="https://img.shields.io/pypi/v/ksql?label=client">
 <a href="https://ksqldb.io/"><img alt="ksqlDB" src="https://img.shields.io/badge/version-0.28.3-blue"></a>
 <br>
 <a href="https://www.docker.com/"><img alt="Docker" width="60" height="20" src="https://img.shields.io/badge/-docker-blue?logo=docker&logoColor=white"></a>
