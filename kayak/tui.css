@@ -1,0 +1,24 @@
+$color: #ce5e00;
+$dark-color: $color 80%;
+
+Footer {
+    dock: bottom;
+    height: 1;
+    background: $surface;
+    color: $dark-color;
+}
+
+Footer > .footer--highlight {
+    background: $boost;
+    color: $color;
+}
+
+Footer > .footer--highlight-key {
+    background: $color;
+    color: black;
+}
+
+Footer > .footer--key {
+    color: black;
+    background: $dark-color;
+}

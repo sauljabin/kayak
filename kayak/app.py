@@ -4,6 +4,7 @@ import click
 from rich.console import Console
 
 from kayak.renderables.kayak_name import KayakName
+from kayak.tui import Tui
 
 
 @click.command()
@@ -50,7 +51,8 @@ def main(
         console.print("[bold red]Missing argument 'SERVER'[/]")
         exit(1)
 
-    click.echo(f"{server} {user} {password}")
+    tui = Tui(server, user, password)
+    tui.run()
 
 
 if __name__ == "__main__":
