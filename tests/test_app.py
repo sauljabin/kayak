@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 from click.testing import CliRunner
 
-from kayak import APP_VERSION
+from kayak import VERSION
 from kayak.app import main
 
 
@@ -12,7 +12,7 @@ class TestApp(TestCase):
         runner = CliRunner()
         result = runner.invoke(main, ["--version"])
         self.assertEqual(result.exit_code, 0)
-        self.assertIn(APP_VERSION, result.output)
+        self.assertIn(VERSION, result.output)
 
     def test_missing_server(self):
         runner = CliRunner()

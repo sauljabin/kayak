@@ -25,9 +25,9 @@ packages = [
 python = "^3.10"
 rich = "^13"
 click = "^8"
+requests = "^2"
 pyfiglet = "*"
 textual = "*"
-ksql = "*"
 
 [tool.poetry.dev-dependencies]
 changelog-cli = "*"
@@ -40,6 +40,7 @@ autoflake = "*"
 mypy = "*"
 unittest = "*"
 types-attrs = "*"
+types-requests = "^2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

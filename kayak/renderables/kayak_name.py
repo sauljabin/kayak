@@ -1,8 +1,8 @@
 from pyfiglet import Figlet
 from rich.text import Text
 
-from kayak import APP_NAME, APP_VERSION
-from kayak.styles.colors import MAIN_COLOR, SECOND_COLOR
+from kayak import NAME, VERSION
+from kayak.styles.colors import PRIMARY, SECONDARY
 
 
 class KayakName:
@@ -11,12 +11,13 @@ class KayakName:
 
     def __str__(self) -> str:
         figlet = Figlet(font="chunky")
-        figlet_string: str = figlet.renderText(APP_NAME).rstrip()
-        return figlet_string
+        text: str = figlet.renderText(NAME)
+        return text.rstrip()
 
     def __rich__(self) -> Text:
-        return Text.from_markup(
-            f"[{MAIN_COLOR} bold]{self}[/]\n[{SECOND_COLOR} bold]v{APP_VERSION}[/]"
-            if self.include_version
-            else f"[{MAIN_COLOR} bold]{self}[/]"
-        )
+        text = Text(str(self), style=f"{PRIMARY} bold")
+
+        if self.include_version:
+            text.append(f"v{VERSION}", style=f"{SECONDARY} bold")
+
+        return text
