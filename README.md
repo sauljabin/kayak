@@ -26,16 +26,14 @@ and [rich](https://github.com/willmcgugan/rich)!.
 
 # Table of Contents
 
-<!-- TOC -->
 * [Table of Contents](#table-of-contents)
 * [Installation and Usage](#installation-and-usage)
-  * [Running with Docker](#running-with-docker)
+    * [Running with Docker](#running-with-docker)
 * [Development](#development)
     * [Scripts](#scripts)
     * [Kafka Cluster](#kafka-cluster)
     * [Docker](#docker)
     * [Bumping Version](#bumping-version)
-<!-- TOC -->
 
 # Installation and Usage
 
@@ -91,7 +89,7 @@ kayak --user user --password -- http://ksqldb:8088
 
 > `kayak` will wait until you enter the password.
 
-## Running with Docker
+### Running with Docker
 
 Using docker:
 

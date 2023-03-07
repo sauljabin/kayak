@@ -1,24 +1,31 @@
-$color: #ce5e00;
-$dark-color: $color 80%;
+$main-color: #ff5f00;
+$dark-main-color: $main-color 80%;
+$second-color: #0087ff;
+
+Header {
+    dock: top;
+    height: 6;
+    margin: 0 0 1 1;
+}
 
 Footer {
     dock: bottom;
     height: 1;
     background: $surface;
-    color: $dark-color;
+    color: $dark-main-color;
 }
 
 Footer > .footer--highlight {
     background: $boost;
-    color: $color;
+    color: $main-color;
 }
 
 Footer > .footer--highlight-key {
-    background: $color;
+    background: $main-color;
     color: black;
 }
 
 Footer > .footer--key {
     color: black;
-    background: $dark-color;
+    background: $dark-main-color;
 }

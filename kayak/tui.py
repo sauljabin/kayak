@@ -6,6 +6,8 @@ from textual.driver import Driver
 from textual.keys import Keys
 from textual.widgets import Footer
 
+from kayak.widgets.header import Header
+
 
 class Tui(App[None]):
     CSS_PATH = "tui.css"
@@ -26,4 +28,5 @@ class Tui(App[None]):
         super().__init__(driver_class, css_path, watch_css)
 
     def compose(self) -> ComposeResult:
+        yield Header()
         yield Footer()

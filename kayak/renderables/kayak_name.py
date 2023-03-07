@@ -2,7 +2,7 @@ from pyfiglet import Figlet
 from rich.text import Text
 
 from kayak import APP_NAME, APP_VERSION
-from kayak.styles.colors import ORANGE
+from kayak.styles.colors import MAIN_COLOR, SECOND_COLOR
 
 
 class KayakName:
@@ -16,7 +16,7 @@ class KayakName:
 
     def __rich__(self) -> Text:
         return Text.from_markup(
-            f"[{ORANGE} bold]{self}[/]\n[green bold]v{APP_VERSION}[/]"
+            f"[{MAIN_COLOR} bold]{self}[/]\n[{SECOND_COLOR} bold]v{APP_VERSION}[/]"
             if self.include_version
-            else f"[{ORANGE} bold]{self}[/]"
+            else f"[{MAIN_COLOR} bold]{self}[/]"
         )
