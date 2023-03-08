@@ -4,7 +4,7 @@ from kayak.ksql.models import Server
 from kayak.styles.colors import SECONDARY
 
 
-class KsqlInfo:
+class ServerInfo:
     def __init__(self, server: Server) -> None:
         self.server = server
 

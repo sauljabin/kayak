@@ -4,7 +4,7 @@ from textual.widgets import Static
 
 from kayak.ksql.models import Server
 from kayak.renderables.kayak_name import KayakName
-from kayak.renderables.ksql_info import KsqlInfo
+from kayak.renderables.server_info import ServerInfo
 
 
 class Header(Static):
@@ -12,5 +12,5 @@ class Header(Static):
 
     def render(self) -> RenderableType:
         kayak_name = KayakName()
-        ksql_info = KsqlInfo(self.server)
+        ksql_info = ServerInfo(self.server)
         return Columns([kayak_name, ksql_info], padding=3)

@@ -29,7 +29,7 @@ class Tui(App[None]):
     ):
         super().__init__(driver_class, css_path, watch_css)
         self.ksql_service = KsqlService(server, user, password)
-        self.server = self.ksql_service.ksql_info()
+        self.server = self.ksql_service.info()
 
     def on_mount(self) -> None:
         header = self.query_one(Header)
