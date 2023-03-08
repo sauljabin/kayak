@@ -25,3 +25,14 @@ Footer > .footer--key {
     background: $primary-darken-1;
     color: black;
 }
+
+Tree {
+    border: solid $background-lighten-3;
+    background: $surface;
+    width: 35;
+}
+
+Tree:focus {
+    border: solid $secondary;
+}
+
