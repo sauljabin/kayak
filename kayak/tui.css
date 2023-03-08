@@ -27,12 +27,11 @@ Footer > .footer--key {
 }
 
 Tree {
-    border: solid $background-lighten-3;
+    border: solid $secondary-background;
     background: $surface;
     width: 35;
 }
 
 Tree:focus {
-    border: solid $secondary;
+    border: heavy $secondary;
 }
-
