@@ -4,15 +4,13 @@ from typing import Any, Callable, Dict, List
 from urllib.parse import urljoin
 
 import httpx
+from httpx import Response
 
 from kayak.ksql.models import Server, Stream, Topic
 
 TIMEOUT_1H = 60 * 60
 
 KSQL_HEADERS = {"Accept": "application/vnd.ksql.v1+json"}
-STATEMENT_PATH = "/ksql"
-QUERY_PATH = "/query-stream"
-INFO_PATH = "/info"
 
 
 class KsqlService:
@@ -27,9 +25,7 @@ class KsqlService:
         self.password = password
 
     def info(self) -> Server:
-        url = urljoin(self.server, INFO_PATH)
-        response = httpx.get(url, headers=KSQL_HEADERS)
-        response.raise_for_status()
+        response = self.introspect("info")
 
         def json_to_server(obj: dict[Any, Any], server: str) -> Any:
             if "KsqlServerInfo" in obj:
@@ -49,11 +45,20 @@ class KsqlService:
         )
         return server_obj
 
-    def streams(self) -> List[Stream]:
-        url = urljoin(self.server, STATEMENT_PATH)
-        data = {"ksql": "LIST STREAMS EXTENDED;"}
-        response = httpx.post(url, json=data, headers=KSQL_HEADERS)
+    def introspect(self, resource: str) -> Response:
+        url = urljoin(self.server, resource)
+        response = httpx.get(
+            url,
+            headers=KSQL_HEADERS,
+            auth=None
+            if None in [self.user, self.password]
+            else (str(self.user), str(self.password)),
+        )
         response.raise_for_status()
+        return response
+
+    def streams(self) -> List[Stream]:
+        response = self.statement("LIST STREAMS EXTENDED;")
 
         def json_to_stream(obj: dict[Any, Any]) -> Any:
             if "sourceDescriptions" in obj:
@@ -71,10 +76,7 @@ class KsqlService:
         return stream_list
 
     def topics(self) -> List[Topic]:
-        url = urljoin(self.server, STATEMENT_PATH)
-        data = {"ksql": "LIST TOPICS;"}
-        response = httpx.post(url, json=data, headers=KSQL_HEADERS)
-        response.raise_for_status()
+        response = self.statement("LIST TOPICS;")
 
         def json_to_topic(obj: dict[Any, Any]) -> Any:
             if "topics" in obj:
@@ -88,6 +90,20 @@ class KsqlService:
         topic_list: List[Topic] = response.json(object_hook=json_to_topic)[0]
         return topic_list
 
+    def statement(self, statement: str) -> Response:
+        data = {"ksql": statement}
+        url = urljoin(self.server, "/ksql")
+        response = httpx.post(
+            url,
+            json=data,
+            headers=KSQL_HEADERS,
+            auth=None
+            if None in [self.user, self.password]
+            else (str(self.user), str(self.password)),
+        )
+        response.raise_for_status()
+        return response
+
     async def query(
         self,
         query: str,
@@ -96,7 +112,7 @@ class KsqlService:
         on_new_row: Callable[[list[Any]], None] = lambda row: None,
         on_close: Callable[[], None] = lambda: None,
     ) -> None:
-        url = urljoin(self.server, QUERY_PATH)
+        url = urljoin(self.server, "/query-stream")
         data = {
             "sql": query,
             "properties": {"ksql.streams.auto.offset.reset": "earliest"}
@@ -104,7 +120,13 @@ class KsqlService:
             else {},
         }
 
-        async with httpx.AsyncClient(http2=True, timeout=TIMEOUT_1H) as client:
+        async with httpx.AsyncClient(
+            http2=True,
+            timeout=TIMEOUT_1H,
+            auth=None
+            if None in [self.user, self.password]
+            else (str(self.user), str(self.password)),
+        ) as client:
             async with client.stream(method="POST", url=url, json=data) as stream:
                 async for chunk in stream.aiter_text():
                     if chunk:
@@ -123,7 +145,6 @@ if __name__ == "__main__":
     print(service.streams())
     print(service.topics())
     print("--QUERY--")
-    # asyncio.run(service.push_query("SELECT * FROM orders EMIT CHANGES;", True))
     asyncio.run(
         service.query(
             "SELECT * FROM orders;",
@@ -135,7 +156,7 @@ if __name__ == "__main__":
     )
     asyncio.run(
         service.query(
-            "SELECT * FROM orderSizes;",
+            "SELECT * FROM orderSizes EMIT CHANGES;",
             True,
             on_header=print,
             on_new_row=print,
