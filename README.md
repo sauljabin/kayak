@@ -174,6 +174,14 @@ Run ksqlDB cli:
 ksql http://localhost:8088
 ```
 
+Import example:
+
+```shell
+ksql -f ksql/create-orders.ksql http://localhost:8088
+ksql -f ksql/insert-orders.ksql http://localhost:8088
+ksql -e "PRINT 'ksqldb.order_sizes' FROM BEGINNING;" http://localhost:8088
+```
+
 ### Docker
 
 Build docker image:
@@ -207,3 +215,11 @@ Upgrade (`major.minor.patch`):
 ```shell
 poetry run python -m scripts.bump patch
 ```
+
+# TODO
+
+- LIST QUERIES, CONNECTORS
+- INPUT FOR QUERY
+- STATEMENTS
+- SETTINGS MENU (earliest, latest)
+- ERROR MESSAGE

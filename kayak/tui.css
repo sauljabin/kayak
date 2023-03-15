@@ -35,3 +35,71 @@ Tree {
 Tree:focus {
     border: heavy $secondary;
 }
+
+Screen {
+    layout: horizontal;
+}
+
+DataTable > .datatable--header {
+    text-style: bold;
+    background: $surface;
+    color: $primary;
+}
+
+DataTable > .datatable--header-hover {
+    text-style: bold;
+    background: $surface;
+    color: $primary;
+}
+
+DataTable {
+    border: solid $secondary-background;
+    height: 1fr;
+}
+
+DataTable:focus {
+    border: heavy $secondary;
+}
+
+DataTable > .datatable--hover {
+    background: $background-lighten-3;
+}
+
+DataTable > .datatable--cursor {
+    background: $secondary-lighten-1;
+    color: $text;
+}
+
+DataTable > .datatable--fixed {
+    background: $surface;
+    color: $text;
+}
+
+DataTable > .datatable--fixed-cursor {
+    background: $secondary-lighten-1;
+    color: $text;
+}
+
+Input {
+    background: $surface;
+    color: $text;
+    padding: 0 1;
+    border: solid $secondary-background;
+    width: 100%;
+    height: 1;
+    min-height: 1;
+}
+
+Input:focus {
+    border: heavy $secondary;
+}
+
+Input > .input--cursor {
+    background: $surface;
+    color: $text;
+    text-style: reverse;
+}
+
+Container {
+    width: 1fr;
+}

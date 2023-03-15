@@ -1,10 +1,12 @@
-from typing import Type
+import asyncio
+from typing import Any, Type
 
 from textual.app import App, ComposeResult, CSSPathType
 from textual.binding import Binding
+from textual.containers import Container
 from textual.driver import Driver
 from textual.keys import Keys
-from textual.widgets import Footer, Tree
+from textual.widgets import DataTable, Footer, Input, Tree
 
 from kayak.ksql.ksql_service import KsqlService
 from kayak.styles.colors import DESIGN
@@ -34,16 +36,17 @@ class Tui(App[None]):
         self.streams = self.ksql_service.streams()
 
     def on_mount(self) -> None:
+        input_query = self.query_one(Input)
+        input_query.placeholder = "QUERY"
+        input_query.focus()
+
         header = self.query_one(Header)
         header.server = self.server
 
-        self.design = DESIGN
-        self.refresh_css()
-
-    def compose(self) -> ComposeResult:
-        tree: Tree[dict[str, str]] = Tree("KSQL")
+        tree = self.query_one(Tree)
         tree.show_root = False
         tree.root.expand()
+        tree.cursor_line = -1
 
         stream_node = tree.root.add("STREAMS", expand=True)
         for stream in self.streams:
@@ -53,6 +56,35 @@ class Tui(App[None]):
         for topic in self.topics:
             topic_node.add_leaf(topic.name)
 
-        yield tree
+        table = self.query_one(DataTable)
+        table.cursor_type = "row"
+
+        self.design = DESIGN
+        self.refresh_css()
+
+    async def on_input_submitted(self, message: Input.Submitted) -> None:
+        table = self.query_one(DataTable)
+        table.focus()
+
+        def on_header(columns: dict[str, str]) -> None:
+            for column in columns["columnNames"]:
+                table.add_column(column)
+
+        def on_new_row(row: list[Any]) -> None:
+            table.add_row(*row)
+            table.scroll_end()
+
+        asyncio.create_task(
+            self.ksql_service.query(
+                query=message.value, on_header=on_header, on_new_row=on_new_row
+            )
+        )
+
+    def compose(self) -> ComposeResult:
         yield Header()
         yield Footer()
+
+        yield Tree("")
+        with Container():
+            yield Input()
+            yield DataTable()
